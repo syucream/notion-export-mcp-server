@@ -83,16 +83,19 @@ async function main() {
 
     if (
       Array.isArray(response.content) &&
+      response.content.length > 0 &&
       response.content[0]?.type === 'text'
     ) {
       // Save the markdown content to a file
       console.log('Notion export result received. First 100 characters:');
       console.log(response.content[0].text.substring(0, 100) + '...');
-
-      // You can uncomment the following lines to save the content to a file
-      // import { writeFileSync } from 'fs';
-      // writeFileSync('notion-export.md', response.content[0].text);
-      // console.log('Saved complete markdown to notion-export.md');
+    } else if (
+      Array.isArray(response.content) &&
+      response.content.length === 0
+    ) {
+      console.log(
+        'Notion export result received with empty content. This is normal in some cases.'
+      );
     } else {
       console.error('Unexpected response format');
     }
