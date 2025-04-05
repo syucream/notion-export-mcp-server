@@ -7,4 +7,8 @@ export const GetExportResultRequestSchema = z.object({
       message: 'Notion page id must only contain 0-9a-z',
     })
     .describe('Notion page id'),
+  recursive: z
+    .boolean()
+    .describe('Export children subpages recursively')
+    .default(false),
 });
