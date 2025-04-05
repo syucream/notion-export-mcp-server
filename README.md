@@ -6,8 +6,6 @@ A [MCP(Model Context Protocol)](https://www.anthropic.com/news/model-context-pro
 
 This server provides MCP-compatible access to Notion's **unofficial** API, allowing AI assistants to interact with your Notion exported page data through a standardized interface.
 
-<a href="https://glama.ai/mcp/servers/7tn35lri9w"><img width="380" height="200" src="https://glama.ai/mcp/servers/7tn35lri9w/badge" alt="Holaspirit Server MCP server" /></a>
-
 ## Features
 
 Available tools:
@@ -57,6 +55,23 @@ Or, run the installed module with node.
     },
 ...
 ```
+
+## Secrets?
+
+### How to get
+
+To export anything from Notion, one needs to authenticate oneself with some Cookies (like a browser would). These cookies are called `token_v2` and `file_token`. They are set on all requests of a logged in user when using the Notion web-app.
+
+1. Go to notion.so.
+2. Log in with your account.
+3. Open the developer tools of your browser, open Application > Storage > Cookies (Chrome); Storage tab (Firefox).
+4. Copy the value of the Cookies called `token_v2` and `file_token` and paste them somewhere safe.
+   - ⚠️ If you don't find file_token, you need to have at least had exported a file manually once.
+5. Those cookies have a 1 year validity, so you don't need to do this often.
+
+### Note on Stability
+
+This tool completely relies on the export/download feature of the official but internal Notion.so API. The advantage is, that we do not generate any markup ourselves, just download and extract some ZIPs. While the download feature seems to be pretty stable, keep in mind that it still is an internal API, **so it may break anytime.**
 
 ## Development
 
