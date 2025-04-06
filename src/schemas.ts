@@ -6,6 +6,7 @@ export const GetExportResultRequestSchema = z.object({
     .regex(/^[0-9a-z]+$/, {
       message: 'Notion page id must only contain 0-9a-z',
     })
+    .length(32)
     .describe('Notion page id'),
   recursive: z
     .boolean()
