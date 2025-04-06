@@ -57,7 +57,7 @@ export class NotionExporter {
         Cookie: `token_v2=${tokenV2};file_token=${fileToken}`,
       },
     });
-    this.config = Object.assign(defaultConfig, config);
+    this.config = Object.assign({}, defaultConfig, config);
   }
 
   /**
