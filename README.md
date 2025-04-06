@@ -42,7 +42,7 @@ Or, run the installed module with node.
 
 ```json
 ...
-    "lightdash": {
+    "notion-export": {
       "command": "npx",
       "args": [
         "-y",
