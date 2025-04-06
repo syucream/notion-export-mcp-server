@@ -8,8 +8,7 @@ import { Server } from '@modelcontextprotocol/sdk/server/index.js';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
 import { zodToJsonSchema } from 'zod-to-json-schema';
 import { GetExportResultRequestSchema } from './schemas.js';
-import { ExtendedNotionExporter } from './exporter.js';
-import { defaultConfig } from 'notion-exporter';
+import { NotionExporter, defaultConfig } from './exporter.js';
 
 const tokenV2 = process.env.NOTION_TOKEN_V2;
 if (!tokenV2) {
@@ -57,7 +56,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
           request.params.arguments
         );
 
-        const exporter = new ExtendedNotionExporter(tokenV2, fileToken, {
+        const exporter = new NotionExporter(tokenV2, fileToken, {
           ...defaultConfig,
           recursive: args.recursive,
         });
