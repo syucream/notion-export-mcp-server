@@ -3,8 +3,10 @@ import { StdioClientTransport } from '@modelcontextprotocol/sdk/client/stdio.js'
 import { config } from 'dotenv';
 import { CallToolResultSchema } from '@modelcontextprotocol/sdk/types.js';
 import { fileURLToPath } from 'node:url';
-import { dirname, resolve } from 'node:path';
+import path, { dirname, resolve } from 'node:path';
 import type { CallToolResult } from '@modelcontextprotocol/sdk/types.js';
+import { writeFile, mkdir } from 'node:fs/promises';
+import { existsSync } from 'node:fs';
 
 // Get the current file's directory
 const __filename = fileURLToPath(import.meta.url);
@@ -89,6 +91,28 @@ async function main() {
       // Save the markdown content to a file
       console.log('Notion export result received. First 100 characters:');
       console.log(response.content[0].text.substring(0, 100) + '...');
+
+      // Save to file if WRITE_TO_FILE environment variable is set to true
+      if (process.env.WRITE_TO_FILE === 'true') {
+        const baseDir = process.env.OUTPUT_BASE_PATH || '.';
+
+        // If the directory does not exist, create it
+        if (!existsSync(baseDir)) {
+          await mkdir(baseDir, { recursive: true });
+          console.log(`Created directory: ${baseDir}`);
+        }
+
+        // Save all text content
+        for (let i = 0; i < response.content.length; i++) {
+          const content = response.content[i];
+          if (content.type === 'text') {
+            const fileName = `notion_export_${pageId}_${i}.md`;
+            const outputPath = path.join(baseDir, fileName);
+            await writeFile(outputPath, content.text, 'utf-8');
+            console.log(`Exported to ${outputPath}`);
+          }
+        }
+      }
     } else if (
       Array.isArray(response.content) &&
       response.content.length === 0
