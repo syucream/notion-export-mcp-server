@@ -22,7 +22,8 @@
     "fix": "npm run fix:eslint && npm run fix:prettier",
     "fix:eslint": "eslint \"src/**/*.ts\" \"examples/**/*.ts\" --fix",
     "fix:prettier": "prettier --write \"src/**/*.ts\" \"examples/**/*.ts\"",
-    "examples": "node --import ./ts-node-loader.js examples/export_page.ts"
+    "examples": "node --import ./ts-node-loader.js examples/export_page.ts",
+    "examples:write": "WRITE_TO_FILE=true OUTPUT_BASE_PATH=./out node --import ./ts-node-loader.js examples/export_page.ts"
   },
   "repository": {
     "type": "git",
